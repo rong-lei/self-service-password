@@ -18,7 +18,6 @@
 {if $background_image}
      <style>
        html, body {
-         background: url({$background_image}) no-repeat center fixed;
          background-size: cover;
        }
   </style>

@@ -33,25 +33,24 @@
 # false: log only errors and do not display them (use this in production)
 $debug = false;
 
-# LDAP
-$ldap_url = "ldap://localhost";
+$ldap_url = "ldap://openldap-server.ldap";
 $ldap_starttls = false;
-$ldap_binddn = "cn=manager,dc=example,dc=com";
-$ldap_bindpw = 'secret';
+$ldap_binddn = "cn=admin,dc=galaxyclouds,dc=com";
+$ldap_bindpw = 'ldap123';
 // for GSSAPI authentication, comment out ldap_bind* and uncomment ldap_krb5ccname lines
 //$ldap_krb5ccname = "/path/to/krb5cc";
-$ldap_base = "dc=example,dc=com";
+$ldap_base = "dc=galaxyclouds,dc=com";
 $ldap_login_attribute = "uid";
 $ldap_fullname_attribute = "cn";
 $ldap_filter = "(&(objectClass=person)($ldap_login_attribute={login}))";
 $ldap_use_exop_passwd = false;
 $ldap_use_ppolicy_control = false;
 
+
 # Active Directory mode
 # true: use unicodePwd as password field
 # false: LDAPv3 standard behavior
 $ad_mode = false;
-$ad_options=[];
 # Force account unlock when password is changed
 $ad_options['force_unlock'] = false;
 # Force user change password at next login
@@ -63,14 +62,12 @@ $ad_options['change_expired_password'] = false;
 # true: update sambaNTpassword and sambaPwdLastSet attributes too
 # false: just update the password
 $samba_mode = false;
-$samba_options=[];
 # Set password min/max age in Samba attributes
 #$samba_options['min_age'] = 5;
 #$samba_options['max_age'] = 45;
 #$samba_options['expire_days'] = 90;
 
 # Shadow options - require shadowAccount objectClass
-$shadow_options=[];
 # Update shadowLastChange
 $shadow_options['update_shadowLastChange'] = false;
 $shadow_options['update_shadowExpire'] = false;
@@ -84,18 +81,16 @@ $shadow_options['shadow_expire_days'] = -1;
 # SMD5
 # MD5
 # CRYPT
-# ARGON2
 # clear (the default)
 # auto (will check the hash of current password)
 # This option is not used with ad_mode = true
 $hash = "clear";
-$hash_options=[];
 
 # Prefix to use for salt with CRYPT
 $hash_options['crypt_salt_prefix'] = "$6$";
 $hash_options['crypt_salt_length'] = "6";
 
-# USE rate-limiting by IP and/or by user 
+# USE rate-limiting by IP and/or by user
 $use_ratelimit = false;
 # dir for json db's (system default tmpdir)
 #$ratelimit_dbdir = '/tmp';
@@ -174,9 +169,6 @@ $change_sshkey = false;
 
 # What attribute should be changed by the changesshkey action?
 $change_sshkey_attribute = "sshPublicKey";
-
-# What objectClass is required for that attribute?
-$change_sshkey_objectClass = "ldapPublicKey";
 
 # Ensure the SSH Key submitted uses a type we trust
 $ssh_valid_key_types = array('ssh-rsa', 'ssh-dss', 'ecdsa-sha2-nistp256', 'ecdsa-sha2-nistp384', 'ecdsa-sha2-nistp521', 'ssh-ed25519');
@@ -299,7 +291,7 @@ $max_attempts = 3;
 # Encryption, decryption keyphrase, required if $use_tokens = true and $crypt_tokens = true, or $use_sms, or $crypt_answer
 # Please change it to anything long, random and complicated, you do not have to remember it
 # Changing it will also invalidate all previous tokens and SMS codes
-$keyphrase = "secret";
+$keyphrase = "aaa";
 
 # Reset URL (if behind a reverse proxy)
 #$reset_url = $_SERVER['HTTP_X_FORWARDED_PROTO'] . "://" . $_SERVER['HTTP_X_FORWARDED_HOST'] . $_SERVER['SCRIPT_NAME'];
@@ -392,9 +384,7 @@ $use_restapi = false;
 #$smarty_cache_dir = "/var/cache/self-service-password/cache";
 
 # Allow to override current settings with local configuration
-if (file_exists (__DIR__ . '/config.inc.local.php')) {
-    require __DIR__ . '/config.inc.local.php';
-}
+
 
 # Smarty
 if (!defined("SMARTY")) {
